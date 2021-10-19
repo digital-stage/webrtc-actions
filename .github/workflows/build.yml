@@ -3,7 +3,8 @@ on: [push]
 
 # Global Settings
 env:
-  WEBRTC_BRANCH: branch-heads/4147
+  #WEBRTC_BRANCH: branch-heads/4472
+  WEBRTC_BRANCH: refs/remotes/branch-heads/4147
   WEBRTC_URL: https://chromium.googlesource.com/external/webrtc
   MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
 
@@ -162,6 +163,14 @@ jobs:
         working-directory: out
         run: |
           gclient sync --no_bootstrap --shallow --no-history -vv --revision ${{ needs.config.outputs.revision }}
+          
+      #- name: Checkout mediasoup related branch
+      #  shell: bash
+      #  working-directory: out
+      #  run: |
+      #    cd src
+      #    git checkout -b m84 refs/remotes/branch-heads/4147
+      #    gclient sync
 
       - name: Patch the WebRTC sources (allow dynamic crt on windows)
         if: ${{ matrix.target_os == 'win' }}
