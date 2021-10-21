@@ -3,7 +3,7 @@ on: [push]
 
 # Global Settings
 env:
-  WEBRTC_BRANCH: branch-heads/4472
+  WEBRTC_BRANCH: branch-heads/4677
   WEBRTC_URL: https://chromium.googlesource.com/external/webrtc
   MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
 
@@ -273,3 +273,8 @@ jobs:
         with:
           name: ${{ env.OUTPUT_NAME }}.tar.gz
           path: ${{ matrix.target_os }}/${{ env.OUTPUT_NAME }}.tar.gz
+      - name: Publish assets
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: ${{ matrix.target_os }}/${{ env.OUTPUT_NAME }}.tar.gz
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
